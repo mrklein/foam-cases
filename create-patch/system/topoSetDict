@@ -1,0 +1,112 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+    {
+        name c0;
+        type cellSet;
+        action new;
+        source cylinderToCell;
+        sourceInfo
+        {
+            p1       (0 -1 0);
+            p2       (0  1 0);
+            radius   0.01;
+        }
+    }
+
+    {
+        name inner-wall;
+        type faceSet;
+        action new;
+        source cellToFace;
+        sourceInfo
+        {
+            set c0;
+            option all;
+        }
+    }
+
+    {
+        name inner-wall;
+        type faceSet;
+        action subset;
+        source patchToFace;
+        sourceInfo
+        {
+            name "defaultFaces";
+        }
+    }
+
+    {
+        name c0;
+        type cellSet;
+        action remove;
+    }
+
+    {
+        name c0;
+        type cellSet;
+        action new;
+        source cylinderToCell;
+        sourceInfo
+        {
+            p1       (0 -1 0);
+            p2       (0  1 0);
+            radius   1;
+        }
+    }
+
+    {
+        name c0;
+        type cellSet;
+        action delete;
+        source cylinderToCell;
+        sourceInfo
+        {
+            p1       (0 -1 0);
+            p2       (0  1 0);
+            radius   0.012;
+        }
+    }
+
+    {
+        name outer-wall;
+        type faceSet;
+        action new;
+        source cellToFace;
+        sourceInfo
+        {
+            set c0;
+            option all;
+        }
+    }
+
+    {
+        name outer-wall;
+        type faceSet;
+        action subset;
+        source patchToFace;
+        sourceInfo
+        {
+            name "defaultFaces";
+        }
+    }
+
+);
+
+// ************************************************************************* //
