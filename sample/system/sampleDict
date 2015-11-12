@@ -8,7 +8,7 @@ FoamFile
 
 setFormat raw;
 surfaceFormat foamFile; // vtk;
-interpolationScheme cellPoint;
+interpolationScheme cell; // cellPoint;
 
 fields
 (
@@ -27,8 +27,8 @@ surfaces
         type            plane;
         basePoint       (2.5 0 0);
         normalVector    (1 0 0);
-        interpolate     true;
-	triangulate     false;
+        interpolate     false;
+        triangulate     false;
     }
 );
 
