@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+application=`getApplication`
+
+cp -r 0.org 0 > /dev/null 2>&1
+[ ! -r tube.msh ] && runApplication gmsh -o tube.msh -3 tube.geo
+runApplication gmshToFoam tube.msh
+runApplication changeDictionary
+runApplication potentialFoam -writep
+runApplication sample

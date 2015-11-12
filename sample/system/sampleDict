@@ -1,0 +1,34 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+
+setFormat raw;
+surfaceFormat foamFile; // vtk;
+interpolationScheme cellPoint;
+
+fields
+(
+    U
+    p
+);
+
+sets
+(
+);
+
+surfaces
+(
+    normal-plane
+    {
+        type            plane;
+        basePoint       (2.5 0 0);
+        normalVector    (1 0 0);
+        interpolate     true;
+	triangulate     false;
+    }
+);
+
