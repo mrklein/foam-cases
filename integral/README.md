@@ -23,9 +23,9 @@ Build  : 2.4.0-dcea1e13ff76
 Exec   : ./integral
 Date   : Jan 27 2016
 Time   : 10:41:34
-Host   : "baloo054.ijl.nancy-universite.fr"
+Host   : ...
 PID    : 4076
-Case   : /scratch/matveich1/Projects/test/foam-cases/integral/test
+Case   : .../foam-cases/integral/test
 nProcs : 1
 sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster
