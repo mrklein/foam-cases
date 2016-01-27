@@ -2,6 +2,7 @@
 
 #include "uniformSet.H"
 #include "meshSearch.H"
+#include "cellSet.H"
 
 #include "constants.H"
 
@@ -32,10 +33,9 @@ int main(int argc, char *argv[])
     // Preset field
     forAll(f.internalField(), i)
     {
-        scalar x = mesh.C()[i].x() - 0.05;
-        scalar y = mesh.C()[i].y() - 0.05;
+        scalar x = mesh.C()[i].x();
 
-        f.internalField()[i] = std::sin(5*pi*std::sqrt(x*x + y*y))/std::sqrt(x*x + y*y);
+        f.internalField()[i] = x;
     }
     // Initial write of the field
     f.write();
@@ -52,18 +52,30 @@ int main(int argc, char *argv[])
         100  // density of points on the line
     );
 
+    cellSet lineCells
+    (
+        mesh,
+        "my_lovely_line_cells",
+        labelHashSet(line.cells())
+    );
+    lineCells.write();
+
     while (runTime.loop())
     {
         scalar r = 0.0;
         // Iterating through the cell labels of our line
         for(int i = 1; i < line.cells().size(); i++)
         {
+            // Cells labels
+            label idx1 = line.cells()[i - 1];
+            label idx2 = line.cells()[i];
+
             // Values in adjacent cells
-            scalar v1 = f.internalField()[i - 1];
-            scalar v2 = f.internalField()[i];
+            scalar v1 = f.internalField()[idx1];
+            scalar v2 = f.internalField()[idx2];
             
             // Distance between cells
-            scalar d = mag(mesh.C()[i] - mesh.C()[i - 1]);
+            scalar d = mag(mesh.C()[idx2] - mesh.C()[idx1]);
 
             // "Trapezoidal rule"
             r += 0.5*(v1 + v2)*d;
