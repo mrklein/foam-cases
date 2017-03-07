@@ -1,0 +1,4 @@
+= probe-acceleration
+
+Use `codedFunctionObject` to calculate fluid acceleration, save it to disk,
+and then use probes to get acceleration value at specific location.
