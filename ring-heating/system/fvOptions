@@ -1,0 +1,178 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvOptions;
+}
+
+electron-beam-heating
+{
+  type            scalarCodedSource;
+  active          yes;
+  name            heating;
+
+  scalarCodedSourceCoeffs
+  {
+    selectionMode   all;
+    fields          ( T );
+
+    codeInclude     #{ #};
+
+    codeCorrect     #{ #};
+
+    codeAddSup
+    #{
+      const scalar rhom = readScalar(coeffs_.lookup("rho"));
+      const scalar Cp = readScalar(coeffs_.lookup("Cp"));
+      const scalar q0 = readScalar(coeffs_.lookup("power"));
+      const scalar z0 = readScalar(coeffs_.lookup("z0"));
+      const word zone_name(coeffs_.lookup("target"));
+      scalarField& src = eqn.source();
+      const auto& cell_zone = mesh_.cellZones()[zone_name];
+      forAll(cell_zone, i) {
+        const label cell_i = cell_zone[i];
+        const scalar z = mesh_.C()[cell_i].y();
+        const scalar q = q0*exp(-1e-2*mag(z - z0));  // i.e. q0*exp(-distance)
+        src[cell_i] += -q/rhom/Cp;
+      }
+    #};
+
+    codeSetValue    #{ #};
+
+    code
+    #{
+      $codeAddSup
+    #};
+  }
+
+  heatingCoeffs
+  {
+    target    deposition-volume;  // cellZone name
+    power     40e2;   // W
+    z0        -1;     // m
+    rho       2700;   // kg/m3
+    Cp        100;    // J/kg/K
+  }
+}
+
+
+radiation
+{
+  type            scalarCodedSource;
+  active          yes;
+  name            radiation;
+
+  scalarCodedSourceCoeffs
+  {
+    selectionMode   all;
+    fields          ( T );
+
+    codeInclude     #{ #include "constants.H" #};
+
+    codeCorrect     #{ #};
+
+    codeAddSup
+    #{
+      using constant::physicoChemical::sigma;
+
+      const scalar rhom = readScalar(coeffs_.lookup("rho"));
+      const scalar Cp = readScalar(coeffs_.lookup("Cp"));
+      const scalar epsilon = readScalar(coeffs_.lookup("emissivity"));
+      const scalar Tambient = readScalar(coeffs_.lookup("Tambient"));
+      const volScalarField& T = mesh_.lookupObject<volScalarField>("T");
+      scalarField& src = eqn.source();
+      const wordList names(coeffs_.lookup("patches"));
+      // Iterating over patches
+      forAll(names, i) {
+        const word& patch_name = names[i];
+        const fvPatch& fp = mesh_.boundary()[patch_name];
+        // Iterating over patch faces
+        forAll(fp, j) {
+          const scalar Aj = fp.magSf()[j];
+          const label cell_j = fp.faceCells()[j];
+          const scalar Tj = T.v()[cell_j];
+          const scalar W = sigma.value()*epsilon*(pow4(Tj) - pow4(Tambient));
+          src[cell_j] += Aj*W/rhom/Cp;
+        }
+      }
+    #};
+
+    codeSetValue    #{ #};
+
+    code
+    #{
+      $codeAddSup
+    #};
+  }
+
+  radiationCoeffs
+  {
+    patches       ( inner-wall );
+    emissivity    1.0;
+    Tambient      300;    // K
+    rho           2700;       // kg/m3
+    Cp            100;        // J/kg/K
+  }
+}
+
+
+cooling
+{
+  type            scalarCodedSource;
+  active          yes;
+  name            cooling;
+
+  scalarCodedSourceCoeffs
+  {
+    selectionMode all;
+    fields ( T );
+
+    codeInclude       #{ #};
+
+    codeCorrect       #{ #};
+
+    codeAddSup
+    #{
+      const scalar rhom = readScalar(coeffs_.lookup("rho"));
+      const scalar Cp = readScalar(coeffs_.lookup("Cp"));
+      const scalar Tcool = readScalar(coeffs_.lookup("Tcool"));
+      const scalar hc = readScalar(coeffs_.lookup("hc"));
+
+      const volScalarField& T = mesh_.lookupObject<volScalarField>("T");
+
+      const wordList names(coeffs_.lookup("patches"));
+      scalarField& src = eqn.source();
+      forAll(names, i) {
+        const word& patch_name = names[i];
+        const fvPatch& fp = mesh_.boundary()[patch_name];
+        // Iterating over patch faces
+        forAll(fp, j) {
+          const scalar Aj = fp.magSf()[j];
+          const label cell_j = fp.faceCells()[j];
+          const scalar Tj = T.v()[cell_j];
+
+          src[cell_j] += Aj*hc*(Tj - Tcool)/rhom/Cp;
+        }
+      }
+    #};
+
+    codeSetValue      #{ #};
+
+    code
+    #{
+      $codeAddSup
+    #};
+  }
+
+  coolingCoeffs
+  {
+    patches       ( outer-wall left-wall right-wall );
+    hc        1000;   // W/m2/K
+    Tcool     300;    // K
+    rho       2700;   // kg/m3
+    Cp        100;    // J/kg/K
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

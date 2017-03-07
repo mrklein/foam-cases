@@ -1,0 +1,41 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       volVectorField;
+  object      U;
+}
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+  inner-wall
+  {
+    type            slip;
+  }
+  outer-wall
+  {
+    type            noSlip;
+  }
+  left-wall
+  {
+    type            noSlip;
+  }
+  right-wall
+  {
+    type            noSlip;
+  }
+  w1
+  {
+    type            wedge;
+  }
+  w2
+  {
+    type            wedge;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

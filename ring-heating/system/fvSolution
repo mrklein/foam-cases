@@ -1,0 +1,57 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "system";
+  object      fvSolution;
+}
+
+solvers
+{
+  p_rgh
+  {
+    solver          PCG;
+    preconditioner  DIC;
+    tolerance       1e-8;
+    relTol          1e-2;
+  }
+
+  "(U|T|k|epsilon|R)"
+  {
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-8;
+    relTol          1e-1;
+  }
+}
+
+SIMPLE
+{
+  nNonOrthogonalCorrectors 0;
+  pRefCell        0;
+  pRefValue       0;
+  consistent      yes;
+
+  residualControl
+  {
+    p_rgh           1e-3;
+    Uz              1e-2;
+    "(Ux|Uy)"       1e-4;
+    T               1e-3;
+
+    "(k|epsilon|omega)" 1e-3;
+  }
+}
+
+relaxationFactors
+{
+  equations
+  {
+    U               0.3;
+    T               0.3;
+    "(k|epsilon|R)" 0.3;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

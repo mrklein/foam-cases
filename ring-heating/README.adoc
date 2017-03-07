@@ -1,0 +1,4 @@
+= ring-heating
+
+Case to illustrate coded fvOption in OpenFOAM. Based on discussion:
+https://www.cfd-online.com/Forums/openfoam-solving/181675-heating-molten-metal.html.

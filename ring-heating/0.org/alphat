@@ -1,0 +1,50 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       volScalarField;
+  location    "0";
+  object      alphat;
+}
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+  outer-wall
+  {
+    type            alphatJayatillekeWallFunction;
+    Prt             0.85;
+    value           uniform 0;
+  }
+  inner-wall
+  {
+    type            alphatJayatillekeWallFunction;
+    Prt             0.85;
+    value           uniform 0;
+  }
+  left-wall
+  {
+    type            alphatJayatillekeWallFunction;
+    Prt             0.85;
+    value           uniform 0;
+  }
+  right-wall
+  {
+    type            alphatJayatillekeWallFunction;
+    Prt             0.85;
+    value           uniform 0;
+  }
+  w1
+  {
+    type            wedge;
+  }
+  w2
+  {
+    type            wedge;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

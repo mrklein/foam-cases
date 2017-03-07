@@ -1,0 +1,41 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       volScalarField;
+  object      T;
+}
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 300;
+
+boundaryField
+{
+  left-wall
+  {
+    type            zeroGradient;
+  }
+  right-wall
+  {
+    type            zeroGradient;
+  }
+  inner-wall
+  {
+    type            zeroGradient;
+  }
+  outer-wall
+  {
+    type            zeroGradient;
+  }
+  w1
+  {
+    type            wedge;
+  }
+  w2
+  {
+    type            wedge;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

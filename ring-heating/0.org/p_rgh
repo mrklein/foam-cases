@@ -1,0 +1,50 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       volScalarField;
+  object      p_rgh;
+}
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+  inner-wall
+  {
+    type            fixedFluxPressure;
+    rho             rhok;
+    value           uniform 0;
+  }
+  outer-wall
+  {
+    type            fixedFluxPressure;
+    rho             rhok;
+    value           uniform 0;
+  }
+  left-wall
+  {
+    type            fixedFluxPressure;
+    rho             rhok;
+    value           uniform 0;
+  }
+  right-wall
+  {
+    type            fixedFluxPressure;
+    rho             rhok;
+    value           uniform 0;
+  }
+  w1
+  {
+    type            wedge;
+  }
+  w2
+  {
+    type            wedge;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
+

@@ -1,0 +1,22 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  object      changeDictionaryDict;
+}
+
+boundary
+{
+  "w."
+  {
+    type            wedge;
+  }
+
+  ".*-wall"
+  {
+    type            wall;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
