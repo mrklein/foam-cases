@@ -11,32 +11,23 @@ FoamFile
 application     icoFoam;
 
 startFrom       startTime;
-
 startTime       0;
-
 stopAt          endTime;
-
 endTime         0.5;
 
 deltaT          0.005;
 
 writeControl    timeStep;
-
 writeInterval   20;
-
 purgeWrite      0;
-
 writeFormat     ascii;
-
 writePrecision  6;
-
 writeCompression off;
 
 timeFormat      general;
-
 timePrecision   6;
 
-runTimeModifiable true;
+runTimeModifiable no;
 
 functions
 {
@@ -46,6 +37,9 @@ functions
 
         type            coded;
         name            calculateDDt;
+
+        executeControl  timeStep;
+        executeInterval 5;
 
         writeControl    writeTime;
         writeInterval   1;
@@ -68,57 +62,76 @@ functions
         codeData
         #{
             autoPtr<probes> probes_;
+            autoPtr<volVectorField> DDtU_;
+            const volVectorField* UPtr_;
+            const surfaceScalarField* phiPtr_;
         #};
 
         codeRead
         #{
+        /*
+            // Constructing probes dictionary
             List<word> fields;
             fields.append("DDt(U)");
             List<vector> locations;
-            // Locations to probe, could be refactored into reading dictionary
-            // instead of constructing it by hand
             locations.append(vector(1e-3, 1e-3, 5e-3));
 
             dictionary conf;
             conf.add("fields", fields);
             conf.add("probeLocations", locations);
+        */
+            // Reading probes dictionary, let's assume it is
+            // system/probesDict
+            IOdictionary conf(
+                IOobject("probesDict", time_.system(), mesh(),
+                         IOobject::MUST_READ));
+
+        /*
+            // Getting probes dictionary from system/controlDict's
+            // probes sub-dictionary.
+            const dictionary& conf(time_.systemDict().subDict("probes"));
+        */
+            UPtr_ = &(mesh().lookupObject<volVectorField>("U"));
+            phiPtr_ = &(mesh().lookupObject<surfaceScalarField>("phi"));
 
             // Initial acceleration field
-            volVectorField t(
-                IOobject("DDt(U)", time_.timeName(), mesh()),
-                mesh(),
-                dimensionedVector("0", dimVelocity/dimTime, Zero));
-            t.write();
+            DDtU_.reset(
+                new volVectorField(
+                    IOobject("DDt(U)", time_.timeName(), mesh()),
+                    mesh(),
+                    dimensionedVector("0", dimVelocity/dimTime, Zero)));
+            DDtU_->checkIn();
+            DDtU_->write();
 
             probes_.reset(
                 new probes(
-                    "DDt(U)", time_, conf));
+                    "DDt(U)", mesh(), conf));
             // Probe and write for time = 0
+            probes_->write();
+        #};
+
+        codeExecute
+        #{
+            // Write probes values
+            DDtU_() = fvc::DDt(*phiPtr_, *UPtr_);
             probes_->write();
         #};
 
         codeWrite
         #{
-            // Lookup U and phi
-            const volVectorField& U = mesh().lookupObject<volVectorField>("U");
-            const surfaceScalarField& phi = mesh().lookupObject<surfaceScalarField>("phi");
             // Write
-            volVectorField t("DDt(U)", fvc::DDt(phi, U));
-            t.write();
-            // Write probes values
-            probes_->write();
+            DDtU_() = fvc::DDt(*phiPtr_, *UPtr_);
+            DDtU_->write();
         #};
 
         codeEnd
         #{
-            // To have probed value at the last time step
-            const volVectorField& U = mesh().lookupObject<volVectorField>("U");
-            const surfaceScalarField& phi = mesh().lookupObject<surfaceScalarField>("phi");
-            volVectorField t("DDt(U)", fvc::DDt(phi, U));
-            t.write();
+            DDtU_() = fvc::DDt(*phiPtr_, *UPtr_);
+            DDtU_->write();
+
             probes_->write();
         #};
     }
 }
 
-// vi: set ft=foam et sw=4 ts=4:
+// ****************** vi: set ft=foam et sw=4 ts=4 sts=4: ****************** //

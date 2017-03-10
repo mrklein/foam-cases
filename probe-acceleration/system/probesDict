@@ -1,13 +1,19 @@
 FoamFile
 {
     version     2.0;
-    foamVersion 4.x;
     format      ascii;
     class       dictionary;
-    location    "constant";
-    object      transportProperties;
+    object      probesDict;
 }
 
-nu              [0 2 -1 0 0 0 0] 0.01;
+fields
+(
+    DDt(U)
+);
+
+probeLocations
+(
+    (1e-3 1e-3 5e-3)
+);
 
 // ****************** vi: set ft=foam et sw=4 ts=4 sts=4: ****************** //
