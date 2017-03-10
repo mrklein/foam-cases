@@ -80,17 +80,17 @@ functions
             conf.add("fields", fields);
             conf.add("probeLocations", locations);
         */
+        /*
             // Reading probes dictionary, let's assume it is
             // system/probesDict
             IOdictionary conf(
                 IOobject("probesDict", time_.system(), mesh(),
                          IOobject::MUST_READ));
-
-        /*
+        */
             // Getting probes dictionary from system/controlDict's
             // probes sub-dictionary.
-            const dictionary& conf(time_.systemDict().subDict("probes"));
-        */
+            const dictionary& conf(time_.controlDict().subDict("probes"));
+
             UPtr_ = &(mesh().lookupObject<volVectorField>("U"));
             phiPtr_ = &(mesh().lookupObject<surfaceScalarField>("phi"));
 
@@ -132,6 +132,19 @@ functions
             probes_->write();
         #};
     }
+}
+
+probes
+{
+    fields
+    (
+        DDt(U)
+    );
+
+    probeLocations
+    (
+        (1e-3 1e-3 5e-3)
+    );
 }
 
 // ****************** vi: set ft=foam et sw=4 ts=4 sts=4: ****************** //
