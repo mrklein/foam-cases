@@ -1,0 +1,86 @@
+FoamFile
+{
+    version     2.0;
+    foamVersion 4.x;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+application     icoFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.5;
+
+deltaT          0.005;
+
+writeControl    timeStep;
+
+writeInterval   20;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    strange-convergence-criterion
+    {
+        libs ("libutilityFunctionObjects.so");
+
+        type            coded;
+        name            StopUponUmax;
+
+        writeControl    writeTime;
+        writeInterval   1;
+
+        codeInclude
+        #{
+            #include "volFields.H"
+        #};
+
+        codeData
+        #{
+            const volVectorField* U;
+        #};
+
+        codeRead
+        #{
+            U = &(mesh().lookupObject<volVectorField>("U"));
+        #};
+
+        codeExecute
+        #{
+            const scalar goal = 1e-8;
+            const scalar mag_umax = mag(Foam::max(*U).value());
+
+            bool converged = mag_umax < goal;
+            reduce(converged, andOp<bool>());
+
+            if (converged)
+            {
+                time_.stopAt(Time::saWriteNow);
+            }
+
+            Info << "max(mag(U)) = " << mag_umax << nl << endl;
+        #};
+    }
+}
+
+// vi: set ft=foam et sw=4 ts=4:

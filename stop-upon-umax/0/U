@@ -1,0 +1,60 @@
+FoamFile
+{
+    version     2.0;
+    foamVersion 4.x;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   #codeStream
+{
+    code
+    #{
+        // Almost like an example in codeStream.H
+        const vector C(0.05, 0.05, 0.005);
+        const vector i(1, 0, 0);
+        const scalar U0 = 1;
+        const IOdictionary& d = static_cast<const IOdictionary&>(dict);
+        const fvMesh& mesh = refCast<const fvMesh>(d.db());
+
+        vectorField fld(mesh.nCells(), vector::zero);
+        forAll(mesh.C(), cell_i)
+        {
+            const vector Ci(mesh.C()[cell_i]);
+            const vector r((Ci - C)/(mag(Ci - C) + SMALL));
+            const scalar a1 = mag(i*(r & i));
+            const scalar a2 = mag(r - a1*i);
+            fld[cell_i] = U0*vector(a2, a1, 0);
+        }
+        fld.writeEntry("", os);
+    #};
+
+    codeInclude
+    #{
+        #include "fvCFD.H"
+    #};
+
+    codeOptions
+    #{
+        -I$(LIB_SRC)/finiteVolume/lnInclude \
+        -I$(LIB_SRC)/meshTools/lnInclude
+    #};
+};
+
+boundaryField
+{
+    fixedWalls
+    {
+        type            noSlip;
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// vi: set ft=foam et sw=4 ts=4:

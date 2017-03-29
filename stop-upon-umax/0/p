@@ -1,0 +1,27 @@
+FoamFile
+{
+    version     2.0;
+    foamVersion 4.x;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    fixedWalls
+    {
+        type            zeroGradient;
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// vi: set ft=foam et sw=4 ts=4:

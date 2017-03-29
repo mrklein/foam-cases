@@ -1,0 +1,10 @@
+= stop-upon-umax
+
+Use `codeStream` and `codedFunctionObject` to
+
+- Set initial velocity field
+- To end simulation upon condition |U_max| < 10^-8
+
+Inspired by question
+https://www.cfd-online.com/Forums/openfoam/185168-add-convergence-criteria.html,
+codeStream.H header comment, and abort function object.
