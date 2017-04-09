@@ -1,0 +1,102 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+
+boundary
+{
+    walls
+    {
+        type            wall;
+    }
+
+    "w."
+    {
+        type            wedge;
+    }
+}
+
+U
+{
+    boundaryField
+    {
+        w1
+        {
+            type        wedge;
+        }
+
+        w2
+        {
+            type        wedge;
+        }
+    }
+}
+
+k
+{
+    boundaryField
+    {
+        w1
+        {
+            type        wedge;
+        }
+
+        w2
+        {
+            type        wedge;
+        }
+    }
+}
+
+nut
+{
+    boundaryField
+    {
+        w1
+        {
+            type        wedge;
+        }
+
+        w2
+        {
+            type        wedge;
+        }
+    }
+}
+
+omega
+{
+    boundaryField
+    {
+        w1
+        {
+            type        wedge;
+        }
+
+        w2
+        {
+            type        wedge;
+        }
+    }
+}
+
+p
+{
+    boundaryField
+    {
+        w1
+        {
+            type        wedge;
+        }
+
+        w2
+        {
+            type        wedge;
+        }
+    }
+}
+
+// vim:set sw=4 ts=4 sts=4 et ft=foam:

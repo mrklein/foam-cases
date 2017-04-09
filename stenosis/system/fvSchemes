@@ -1,0 +1,49 @@
+FoamFile
+{
+    version     2.0;
+    foamVersion	4.x;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+
+ddtSchemes
+{
+    default         steadyState;
+}
+
+gradSchemes
+{
+    default         leastSquares;
+}
+
+divSchemes
+{
+    default         none;
+    div(phi,U)      bounded Gauss vanLeerV;
+    div(phi,k)      bounded Gauss vanLeer;
+    div(phi,omega)  bounded Gauss vanLeer;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+wallDist
+{
+    method meshWave;
+}
+
+// vi: set ft=foam et sw=4 ts=4:

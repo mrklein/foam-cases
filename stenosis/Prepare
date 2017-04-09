@@ -1,0 +1,27 @@
+#!/bin/sh
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+application=`getApplication`
+
+if [ $# -lt 1 ]
+then
+    echo "Usage: $0 <symmetry>"
+    echo "where <symmetry> is:"
+    echo "  plane   for plane symmetry"
+    echo "  axial   for axial symmetry"
+    exit
+fi
+
+if [ "$1" = "plane" -o "$1" = "axial" ]
+then
+    cp -r 0.org 0 > /dev/null 2>&1
+else
+    echo "Supply either plane or axial as symmetry parameter."
+    exit
+fi
+
+[ ! -r "stenosis-$1.msh" ] && runApplication gmsh -o "stenosis-2D-$1.msh" -3 "stenosis-2D-$1.geo"
+runApplication gmshToFoam "stenosis-2D-$1.msh"
+runApplication changeDictionary -dict "system/changeDictionaryDict-$1"
+

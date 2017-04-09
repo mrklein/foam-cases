@@ -1,0 +1,107 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+
+boundary
+{
+    walls
+    {
+        type            wall;
+    }
+
+    front-n-back
+    {
+        type            empty;
+    }
+
+    symmetry-plane
+    {
+        type            symmetryPlane;
+    }
+}
+
+U
+{
+    boundaryField
+    {
+        front-n-back
+        {
+            type        empty;
+        }
+
+        symmetry-plane
+        {
+            type            symmetryPlane;
+        }
+    }
+}
+
+k
+{
+    boundaryField
+    {
+        front-n-back
+        {
+            type        empty;
+        }
+
+        symmetry-plane
+        {
+            type            symmetryPlane;
+        }
+    }
+}
+
+nut
+{
+    boundaryField
+    {
+        front-n-back
+        {
+            type        empty;
+        }
+
+        symmetry-plane
+        {
+            type            symmetryPlane;
+        }
+    }
+}
+
+omega
+{
+    boundaryField
+    {
+        front-n-back
+        {
+            type        empty;
+        }
+
+        symmetry-plane
+        {
+            type            symmetryPlane;
+        }
+    }
+}
+
+p
+{
+    boundaryField
+    {
+        front-n-back
+        {
+            type        empty;
+        }
+
+        symmetry-plane
+        {
+            type            symmetryPlane;
+        }
+    }
+}
+
+// vim:set sw=4 ts=4 sts=4 et ft=foam:

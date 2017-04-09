@@ -1,0 +1,13 @@
+= stenosis
+
+Case was create in response to this quiestion: https://www.cfd-online.com/Forums/openfoam-meshing-open/185959-gmshtofoam-3d-instead-2d.html.
+
+To run the case, you:
+
+1. Decide what symmetry you need (plane and axial).
+2. Run `Prepare` script with corresponding options (ex. `./Prepare axial`).
+3. Run `simpleFoam`.
+4. Wait for convergence.
+
+`figs` folder contains two pictures with velocity field for different symmetry
+cases.
