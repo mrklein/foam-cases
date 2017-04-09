@@ -21,7 +21,7 @@ else
     exit
 fi
 
-[ ! -r "stenosis-$1.msh" ] && runApplication gmsh -o "stenosis-2D-$1.msh" -3 "stenosis-2D-$1.geo"
+[ ! -r "stenosis-2D-$1.msh" ] && runApplication gmsh -o "stenosis-2D-$1.msh" -3 "stenosis-2D-$1.geo"
 runApplication gmshToFoam "stenosis-2D-$1.msh"
 runApplication changeDictionary -dict "system/changeDictionaryDict-$1"
 
