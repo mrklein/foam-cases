@@ -42,6 +42,13 @@ internalField   #codeStream
         -I$(LIB_SRC)/finiteVolume/lnInclude \
         -I$(LIB_SRC)/meshTools/lnInclude
     #};
+
+    codeLibs
+    #{
+        -lmeshTools \
+        -lfiniteVolume \
+        -lOpenFOAM
+    #};
 };
 
 boundaryField
