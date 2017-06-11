@@ -13,8 +13,8 @@ solvers
     {
         solver           PCG;
 	preconditioner   DIC;
-        tolerance        1e-8;
-        relTol           1e-2;
+        tolerance        1e-24;
+        relTol           1e-3;
     }
 
     pFinal
@@ -27,7 +27,7 @@ solvers
     {
         solver          PBiCG;
 	preconditioner  DILU;
-        tolerance       1e-8;
+        tolerance       1e-24;
         relTol          1e-2;
     }
 
@@ -40,9 +40,9 @@ solvers
 
 PIMPLE
 {
-    nOuterCorrectors 100;
+    nOuterCorrectors 20;
     nNonOrthogonalCorrectors 0;
-    nCorrectors         2;
+    nCorrectors 2;
 
     turbOnFinalIterOnly no;
 
@@ -50,7 +50,7 @@ PIMPLE
     {
         "(U|p)"
 	{
-	    tolerance 1e-4;
+	    tolerance 1e-6;
 	    relTol 0;
 	}
     }
