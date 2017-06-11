@@ -1,0 +1,3 @@
+= jet
+
+Example case for the question https://www.cfd-online.com/Forums/openfoam-solving/188779-problem-incorrect-fluid-flow-field-using-openfoam.html.

@@ -1,0 +1,58 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+
+solvers
+{
+    p
+    {
+        solver           PCG;
+	preconditioner   DIC;
+        tolerance        1e-8;
+        relTol           1e-2;
+    }
+
+    pFinal
+    {
+        $p;
+        relTol          0;
+    }
+
+    "(U|k|epsilon)"
+    {
+        solver          PBiCG;
+	preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          1e-2;
+    }
+
+    "(U|k|epsilon)Final"
+    {
+        $U;
+        relTol          0;
+    }
+}
+
+PIMPLE
+{
+    nOuterCorrectors 100;
+    nNonOrthogonalCorrectors 0;
+    nCorrectors         2;
+
+    turbOnFinalIterOnly no;
+
+    residualControl
+    {
+        "(U|p)"
+	{
+	    tolerance 1e-4;
+	    relTol 0;
+	}
+    }
+}
+

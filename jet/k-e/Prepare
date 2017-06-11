@@ -1,0 +1,9 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication gmsh -3 -o channel.msh channel.geo
+runApplication gmshToFoam channel.msh
+runApplication createPatch -overwrite
+runApplication changeDictionary

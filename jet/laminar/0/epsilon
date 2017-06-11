@@ -1,0 +1,42 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 9.433411780077241e-06;
+
+boundaryField
+{
+    inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.06695652173913;
+        value           $internalField;
+    }
+    injector
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.0007; // whatever
+        value           $internalField;
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    walls
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    front-n-back
+    {
+        type            empty;
+    }
+}
+

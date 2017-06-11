@@ -1,0 +1,58 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+application     pimpleFoam;
+
+startFrom       latestTime;
+startTime       0;
+stopAt          endTime;
+endTime         10;
+deltaT          1e-6;
+
+writeControl    adjustableRunTime;
+writeInterval   1e-2;
+
+purgeWrite      0;
+writeFormat     binary;
+writePrecision  12;
+writeCompression on;
+
+timeFormat      general;
+timePrecision   12;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+maxCo           0.5;
+
+functions
+{
+  center-plane
+  {
+    libs ("libsampling.so");
+
+    type surfaces;
+    writeControl writeTime;
+    surfaceFormat raw;
+    fields (p U nut);
+    interpolationScheme cellPoint;
+    surfaces
+    (
+      center-plane
+      {
+        type plane;
+        basePoint (1 0.225 0.005);
+        normalVector (0 0 1);
+        triangulate true;
+      }
+    );
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
