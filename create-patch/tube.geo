@@ -137,6 +137,6 @@ Transfinite Volume "*";
 Mesh 3;
 
 // Uncomment this line to save generated mesh upon opening the file with gmsh
-// Or you can go "gmsh - cylinder.geo" to supper starting of GUI
-Save "tube.msh";
+// Or you can do "gmsh - cylinder.geo" to avoid starting GUI
+// Save "tube.msh";
 
