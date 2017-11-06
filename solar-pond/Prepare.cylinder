@@ -1,0 +1,14 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+MESH_FILE=cylinder
+
+runApplication gmsh -3 -o ${MESH_FILE}.msh ${MESH_FILE}.geo
+runApplication gmshToFoam ${MESH_FILE}.msh
+cp -r 0.org 0
+runApplication changeDictionary
+runApplication setFields
+cp system/fvSchemes.cylinder system/fvSchemes
+cp system/fvSolution.cylinder system/fvSolution

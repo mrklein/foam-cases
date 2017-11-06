@@ -1,0 +1,25 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      setFieldsDict;
+}
+
+defaultFieldValues
+(
+    volScalarFieldValue T 298.15
+);
+
+regions
+(
+    boxToCell
+    {
+        box (-10 -10 0.61) (10 10 1.83);
+
+        fieldValues
+        (
+            volScalarFieldValue T 305.15
+        );
+    }
+);

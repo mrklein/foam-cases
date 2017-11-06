@@ -1,0 +1,179 @@
+// -*- tab-width: 2; indent-tabs-mode: nil; -*-
+
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  location    "constant";
+  object      fvOptions;
+}
+
+// fvOption to describe solar heating and water radiation
+radiation
+{
+  type scalarCodedSource;
+  active yes;
+  name radiativeHeatExchange;
+
+  scalarCodedSourceCoeffs
+  {
+    selectionMode all;
+    fields (T);
+
+    codeInclude
+    #{
+      // Need this for Stefan-Boltzmann constant
+      #include "constants.H"
+    #};
+
+    codeCorrect
+    #{
+    #};
+
+    codeAddSup
+    #{
+      using constant::physicoChemical::sigma;
+			
+      if (not isActive())
+        return;
+
+      // Looking up model parameters
+      scalar Qsm = coeffs().lookupOrDefault<scalar>("Qsm", 164.0);
+      scalar rhow = coeffs().lookupOrDefault<scalar>("rho", 1000);
+      scalar Cp = coeffs().lookupOrDefault<scalar>("Cp", 4200);
+      scalar Rt = coeffs().lookupOrDefault<scalar>("Rt", 0.03);
+      scalar ew = coeffs().lookupOrDefault<scalar>("ew", 0.97);
+
+      // Getting source vector from equation matrix
+      scalarField& src = eqn.source();
+      const volScalarField& T = eqn.psi();
+
+      // Iterating through patch
+      word top_patch_name = coeffs().lookupOrDefault<word>("patch", "top");
+      const fvPatch& pp = mesh().boundary()[top_patch_name];
+      forAll(pp, i) {
+        label cell_i = pp.faceCells()[i];
+        scalar Ai = pp.magSf()[i];
+        scalar Ts = T[cell_i];
+
+        // Heating
+        src[cell_i] -= Qsm*(1 - Rt)*Ai/rhow/Cp;
+
+        // Cooling
+        src[cell_i] -= -sigma.value()*ew*pow4(Ts)*Ai/rhow/Cp;
+      }
+    #};
+
+    codeSetValue
+    #{
+    #};
+
+    code
+    #{
+      $codeInclude;
+      $codeCorrect;
+      $codeAddSup;
+      $codeSetValue;
+    #};
+  }
+
+  radiativeHeatExchangeCoeffs
+  {
+    selectionMode all;
+
+    patch top;  // Name of the top patch
+    Qsm 163.0;  // Solar radiative heat flux
+    Rt 0.03;    // Reflectivity of water
+    ew 0.97;    // Emissivity of water
+    rho 1000.0;
+    Cp 4200.0;
+  }
+}
+ 
+// fvOption do describe evaporation heat losses
+evaporation
+{
+  type scalarCodedSource;
+  active yes;
+  name evaporationHeatLosses;
+
+  scalarCodedSourceCoeffs
+  {
+    selectionMode all;
+    fields (T);
+
+    codeInclude
+    #{
+    #};
+
+    codeCorrect
+    #{
+    #};
+
+    codeAddSup
+    #{
+      if (not isActive())
+        return;
+
+      // Looking up model parameters
+      scalar A = coeffs().lookupOrDefault<scalar>("A", 2.7);
+      scalar rhow = coeffs().lookupOrDefault<scalar>("rho", 1000);
+      scalar Cp = coeffs().lookupOrDefault<scalar>("Cp", 4200);
+      scalar Ta = coeffs().lookupOrDefault<scalar>("Ta", 25);
+      scalar e2 = coeffs().lookupOrDefault<scalar>("e2", 31.69);
+      scalar b0 = coeffs().lookupOrDefault<scalar>("b0", 3.2);
+      scalar u2 = coeffs().lookupOrDefault<scalar>("u2", 0);
+     
+      // Getting source vector from equation matrix
+      scalarField& src = eqn.source();
+      const volScalarField& T = eqn.psi();
+
+      // Iterating through patch
+      word top_patch_name = coeffs().lookupOrDefault<word>("patch", "top");
+      const fvPatch& pp = mesh().boundary()[top_patch_name];
+      forAll(pp, i) {
+        label cell_i = pp.faceCells()[i];
+        scalar Ai = pp.magSf()[i];
+        scalar Ts = T[cell_i] - 273.15;
+
+        // Buck equation
+        scalar es = 0.61121*exp((18.678 - Ts/234.5)*(Ts/(257.15 + Ts)));
+        // Converting into mbar
+        es *= 10;
+        scalar Qe = -(A*cbrt(Ts - Ta) + b0*u2)*(es - e2);
+
+        src[cell_i] -= Qe*Ai/rhow/Cp;
+      }
+
+    #};
+
+    codeSetValue
+    #{
+    #};
+
+    code
+    #{
+      $codeInclude;
+      $codeCorrect;
+      $codeAddSup;
+      $codeSetValue;
+    #};
+  }
+
+  evaporationHeatLossesCoeffs
+  {
+    selectionMode all;
+
+    patch top;  // Name of the top patch
+    A 2.7;     	// Empiric constant
+    e2 31.69;  	// Assuming 25 C 2 meters above the surface
+    b0 3.2;    	// Another empiric constant
+    u2 0.0;    	// Wind velocity 2 meters above the surface
+    Ta 25;     	// Ambient temperature in C
+    rho 1000;
+    Cp 4200;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
