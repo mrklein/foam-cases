@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+cleanCase
+rm -rf 0 *.obj constant/{extendedFeatureEdgeMesh,polyMesh}
+
+cd ../two-blocks
+./Clean
+
+cd ../strange-tube

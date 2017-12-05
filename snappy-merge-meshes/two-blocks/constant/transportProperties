@@ -1,0 +1,12 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  location "constant";
+  object transportProperties;
+}
+
+nu [ m^2 s^-1 ] 0.01;
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

@@ -1,0 +1,30 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  location "system";
+  object controlDict;
+}
+
+application icoFoam;
+
+startFrom startTime;
+startTime 0;
+stopAt endTime;
+endTime 0.5;
+deltaT 0.005;
+
+writeControl timeStep;
+writeInterval 20;
+purgeWrite 0;
+writeFormat binary;
+writePrecision 6;
+writeCompression off;
+
+timeFormat general;
+timePrecision 6;
+
+runTimeModifiable true;
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

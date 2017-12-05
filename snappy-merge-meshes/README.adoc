@@ -1,0 +1,20 @@
+= snappy-merge-meshes
+
+The idea of the cases is to illustrate mesh merge process. Starting point is
+geometry shown on Fig. 1:
+
+.Initial geometry
+[caption="Figure 1: "]
+image::http://...strange-tube.png[Initial geometry]
+
+It is created in `OpenSCAD` (script is link:http://...[here]). Final aim is to
+generate mesh for the geometry and to attach cuboid inlet and outlet blocks,
+like on the Fig. 2:
+
+.Final geometry
+[caption="Figure 2: "]
+image::http://...final-mesh.png[Final geometry]
+
+To generate mesh run `Prepare` script in `strange-tube` folder.
+
+Case is tested on OpenFOAM(R) 4.0.

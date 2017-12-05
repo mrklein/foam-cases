@@ -1,0 +1,49 @@
+#!/bin/sh
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Generating initial mesh
+runApplication blockMesh
+runApplication snappyHexMesh -overwrite
+# Merging wall patches into single patch
+runApplication createPatch -overwrite -dict system/createPatchDict-1
+mv log.createPatch log.createPatch-1
+
+# Generating inlet and outlet blocks
+cd ../two-blocks
+runApplication blockMesh
+
+# Mergning meshes
+cd ../strange-tube
+runApplication mergeMeshes -overwrite . ../two-blocks
+
+# Stitching patches
+runApplication stitchMesh -overwrite -partial inlet-outlet tube-inlet
+mv log.stitchMesh log.stitchMesh-1
+# Removing empty patches
+runApplication createPatch -overwrite -dict system/createPatchDict-2
+mv log.createPatch log.createPatch-2
+
+# stitcheMesh junk cleanup
+rm constant/polyMesh/meshModifiers
+runApplication topoSet -constant -dict system/topoSetDict-1
+mv log.topoSet log.topoSet-1
+
+# Stitching another pair of patches
+runApplication stitchMesh -overwrite -partial outlet-inlet tube-outlet
+mv log.stitchMesh log.stitchMesh-2
+
+# Removing empty patches
+runApplication createPatch -overwrite -dict system/createPatchDict-2
+mv log.createPatch log.createPatch-3
+
+# stitcheMesh junk cleanup
+rm constant/polyMesh/meshModifiers
+runApplication topoSet -constant -dict system/topoSetDict-2
+mv log.topoSet log.topoSet-2
+
+# Merging all wall patches
+runApplication createPatch -overwrite -dict system/createPatchDict-3
+mv log.createPatch log.createPatch-4
+
+cp -r 0.org 0

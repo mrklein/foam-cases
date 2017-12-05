@@ -1,0 +1,59 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  location "system";
+  object fvSolution;
+}
+
+solvers
+{
+  p
+  {
+    solver GAMG;
+    smoother DICGaussSeidel;
+    tolerance 1e-8;
+    relTol 0.1;
+  }
+
+  pFinal
+  {
+    $p;
+    relTol 0;
+  }
+
+  "(U|k|epsilon)"
+  {
+    solver smoothSolver;
+    smoother symGaussSeidel;
+    tolerance 1e-08;
+    relTol 0.1;
+  }
+
+  "(U|k|epsilon)Final"
+  {
+    $U;
+    relTol 0;
+  }
+}
+
+PIMPLE
+{
+  momentumPredictor no;
+
+  nOuterCorrectors 100;
+  nNonOrthogonalCorrectors 2;
+  nCorrectors         2;
+
+  residualControl
+  {
+    "(p|U)"
+    {
+      tolerance 1e-4;
+      relTol 0;
+    }
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

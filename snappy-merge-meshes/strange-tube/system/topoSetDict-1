@@ -1,0 +1,36 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  object      topoSetDict;
+}
+
+actions
+(
+  {
+    name inlet-outlettube-inletMasterZone;
+    type faceZoneSet;
+    action remove;
+  }
+
+  {
+    name inlet-outlettube-inletSlaveZone;
+    type faceZoneSet;
+    action remove;
+  }
+
+  {
+    name inlet-outlettube-inletCutFaceZone;
+    type faceZoneSet;
+    action remove;
+  }
+
+  {
+    name inlet-outlettube-inletCutPointZone;
+    type pointZoneSet;
+    action remove;
+  }
+);
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

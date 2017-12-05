@@ -1,0 +1,34 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class volScalarField;
+  location "0";
+  object k;
+}
+
+dimensions [0 2 -2 0 0 0 0];
+internalField uniform 1e-8;
+
+boundaryField
+{
+  inlet
+  {
+    type turbulentIntensityInlet;
+    intensity 0.05;
+    value $internalField;
+  }
+
+  outlet
+  {
+    type zeroGradient;
+  }
+
+  tube-walls
+  {
+    type kqRWallFunction;
+    value $internalField;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

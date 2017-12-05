@@ -1,0 +1,26 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object createPatchDict;
+}
+
+pointSync false;
+
+patches
+(
+  {
+    name tube-walls;
+
+    patchInfo
+    {
+      type wall;
+    }
+
+    constructFrom patches;
+    patches (inlet-outlet inlet-walls outlet-inlet outlet-walls tube-walls);
+  }
+);
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
