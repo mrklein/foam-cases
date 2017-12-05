@@ -5,7 +5,7 @@ geometry shown on Fig. 1:
 
 .Initial geometry
 [caption="Figure 1: "]
-image::http://https://raw.githubusercontent.com/mrklein/foam-cases/master/snappy-merge-meshes/strange-tube/strange-tube.png[Initial geometry,375,260]
+image::https://raw.githubusercontent.com/mrklein/foam-cases/master/snappy-merge-meshes/strange-tube/strange-tube.png[Initial geometry,375,260]
 
 It is created in `OpenSCAD` (script is link:https://raw.githubusercontent.com/mrklein/foam-cases/master/snappy-merge-meshes/strange-tube/strange-tube.scad[here]). Final aim is to
 generate mesh for the geometry and to attach cuboid inlet and outlet blocks,
@@ -13,7 +13,7 @@ like on the Fig. 2:
 
 .Final geometry
 [caption="Figure 2: "]
-image::http://https://raw.githubusercontent.com/mrklein/foam-cases/master/snappy-merge-meshes/strange-tube/final-mesh.png[Final geometry,400,300]
+image::https://raw.githubusercontent.com/mrklein/foam-cases/master/snappy-merge-meshes/strange-tube/final-mesh.png[Final geometry,400,300]
 
 To generate mesh run `Prepare` script in `strange-tube` folder.
 
