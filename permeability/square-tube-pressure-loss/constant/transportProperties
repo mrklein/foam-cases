@@ -1,0 +1,13 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object transportProperties;
+}
+
+transportModel Newtonian;
+// Water at 25 C
+nu [0 2 -1 0 0 0 0] 0.8926e-6;
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

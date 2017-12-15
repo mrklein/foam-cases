@@ -1,0 +1,272 @@
+
+cylv1
+{
+  type searchableCylinder;
+  point1 (0.000625 0.000125 -1);
+  point2 (0.000625 0.000125 1);
+  radius 0.000063;
+}
+
+cylh1
+{
+  type searchableCylinder;
+  point1 (0.000625 -1 0.000125);
+  point2 (0.000625 1 0.000125);
+  radius 0.000063;
+}
+
+
+cylv2
+{
+  type searchableCylinder;
+  point1 (0.000625 0.000375 -1);
+  point2 (0.000625 0.000375 1);
+  radius 0.000063;
+}
+
+cylh2
+{
+  type searchableCylinder;
+  point1 (0.000625 -1 0.000375);
+  point2 (0.000625 1 0.000375);
+  radius 0.000063;
+}
+
+
+cylv3
+{
+  type searchableCylinder;
+  point1 (0.000625 0.000625 -1);
+  point2 (0.000625 0.000625 1);
+  radius 0.000063;
+}
+
+cylh3
+{
+  type searchableCylinder;
+  point1 (0.000625 -1 0.000625);
+  point2 (0.000625 1 0.000625);
+  radius 0.000063;
+}
+
+
+cylv4
+{
+  type searchableCylinder;
+  point1 (0.000625 0.000875 -1);
+  point2 (0.000625 0.000875 1);
+  radius 0.000063;
+}
+
+cylh4
+{
+  type searchableCylinder;
+  point1 (0.000625 -1 0.000875);
+  point2 (0.000625 1 0.000875);
+  radius 0.000063;
+}
+
+
+cylv5
+{
+  type searchableCylinder;
+  point1 (0.000875 0.000125 -1);
+  point2 (0.000875 0.000125 1);
+  radius 0.000063;
+}
+
+cylh5
+{
+  type searchableCylinder;
+  point1 (0.000875 -1 0.000125);
+  point2 (0.000875 1 0.000125);
+  radius 0.000063;
+}
+
+
+cylv6
+{
+  type searchableCylinder;
+  point1 (0.000875 0.000375 -1);
+  point2 (0.000875 0.000375 1);
+  radius 0.000063;
+}
+
+cylh6
+{
+  type searchableCylinder;
+  point1 (0.000875 -1 0.000375);
+  point2 (0.000875 1 0.000375);
+  radius 0.000063;
+}
+
+
+cylv7
+{
+  type searchableCylinder;
+  point1 (0.000875 0.000625 -1);
+  point2 (0.000875 0.000625 1);
+  radius 0.000063;
+}
+
+cylh7
+{
+  type searchableCylinder;
+  point1 (0.000875 -1 0.000625);
+  point2 (0.000875 1 0.000625);
+  radius 0.000063;
+}
+
+
+cylv8
+{
+  type searchableCylinder;
+  point1 (0.000875 0.000875 -1);
+  point2 (0.000875 0.000875 1);
+  radius 0.000063;
+}
+
+cylh8
+{
+  type searchableCylinder;
+  point1 (0.000875 -1 0.000875);
+  point2 (0.000875 1 0.000875);
+  radius 0.000063;
+}
+
+
+cylv9
+{
+  type searchableCylinder;
+  point1 (0.001125 0.000125 -1);
+  point2 (0.001125 0.000125 1);
+  radius 0.000063;
+}
+
+cylh9
+{
+  type searchableCylinder;
+  point1 (0.001125 -1 0.000125);
+  point2 (0.001125 1 0.000125);
+  radius 0.000063;
+}
+
+
+cylv10
+{
+  type searchableCylinder;
+  point1 (0.001125 0.000375 -1);
+  point2 (0.001125 0.000375 1);
+  radius 0.000063;
+}
+
+cylh10
+{
+  type searchableCylinder;
+  point1 (0.001125 -1 0.000375);
+  point2 (0.001125 1 0.000375);
+  radius 0.000063;
+}
+
+
+cylv11
+{
+  type searchableCylinder;
+  point1 (0.001125 0.000625 -1);
+  point2 (0.001125 0.000625 1);
+  radius 0.000063;
+}
+
+cylh11
+{
+  type searchableCylinder;
+  point1 (0.001125 -1 0.000625);
+  point2 (0.001125 1 0.000625);
+  radius 0.000063;
+}
+
+
+cylv12
+{
+  type searchableCylinder;
+  point1 (0.001125 0.000875 -1);
+  point2 (0.001125 0.000875 1);
+  radius 0.000063;
+}
+
+cylh12
+{
+  type searchableCylinder;
+  point1 (0.001125 -1 0.000875);
+  point2 (0.001125 1 0.000875);
+  radius 0.000063;
+}
+
+
+cylv13
+{
+  type searchableCylinder;
+  point1 (0.001375 0.000125 -1);
+  point2 (0.001375 0.000125 1);
+  radius 0.000063;
+}
+
+cylh13
+{
+  type searchableCylinder;
+  point1 (0.001375 -1 0.000125);
+  point2 (0.001375 1 0.000125);
+  radius 0.000063;
+}
+
+
+cylv14
+{
+  type searchableCylinder;
+  point1 (0.001375 0.000375 -1);
+  point2 (0.001375 0.000375 1);
+  radius 0.000063;
+}
+
+cylh14
+{
+  type searchableCylinder;
+  point1 (0.001375 -1 0.000375);
+  point2 (0.001375 1 0.000375);
+  radius 0.000063;
+}
+
+
+cylv15
+{
+  type searchableCylinder;
+  point1 (0.001375 0.000625 -1);
+  point2 (0.001375 0.000625 1);
+  radius 0.000063;
+}
+
+cylh15
+{
+  type searchableCylinder;
+  point1 (0.001375 -1 0.000625);
+  point2 (0.001375 1 0.000625);
+  radius 0.000063;
+}
+
+
+cylv16
+{
+  type searchableCylinder;
+  point1 (0.001375 0.000875 -1);
+  point2 (0.001375 0.000875 1);
+  radius 0.000063;
+}
+
+cylh16
+{
+  type searchableCylinder;
+  point1 (0.001375 -1 0.000875);
+  point2 (0.001375 1 0.000875);
+  radius 0.000063;
+}
+

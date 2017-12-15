@@ -1,0 +1,73 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object blockMeshDict;
+}
+
+l 2;
+d 1;
+
+convertToMeters 1e-3;
+
+vertices
+(
+  ( 0  0 0)
+  ($l  0 0)
+  ($l $d 0)
+  ( 0 $d 0)
+
+  ( 0  0 $d)
+  ($l  0 $d)
+  ($l $d $d)
+  ( 0 $d $d)
+);
+
+blocks
+(
+  hex (0 1 2 3 4 5 6 7) (50 25 25) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+  inlet
+  {
+    type patch;
+    faces
+    (
+      (0 3 7 4)
+    );
+  }
+
+  walls
+  {
+    type wall;
+    faces
+    (
+      (0 1 2 3)
+      (4 5 6 7)
+      (0 1 5 4)
+      (3 2 6 7)
+    );
+  }
+
+  outlet
+  {
+    type patch;
+    faces
+    (
+      (1 2 6 5)
+    );
+  }
+);
+
+mergePatchPairs
+(
+);
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

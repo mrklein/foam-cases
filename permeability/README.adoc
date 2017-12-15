@@ -1,0 +1,49 @@
+= permeability
+
+Different cases to demonstrate a way to check when transient simulations reach
+steady state.
+
+Each case has `Prepare`, `Run`, `Stop`, and `Clean` scripts to simplify case
+manipulations.
+
+All plotting scripts use link:http://matplotlib.org[matplotlib] and
+link:http://numpy.org[numpy].
+
+== square-tube-pressure-loss
+
+Transient simulation of a flow through the pipe with square profile. Flow rate
+is set using inlet velocity. Pressure drop (since at the outlet pressure is
+zero, in fact, just average pressure at the inlet is used) is used as a value
+to monitor state of simulation. On the plot pressure loss is compared with
+one estimated using Darcy-Weisbach equation.
+
+`plot-pressure-loss.py` plots comparison of simulated pressure loss with value
+calculated using Dracy-Weisbach equation.
+
+== square-tube-flow-rate
+
+The same as `square-tube-pressure-loss` but instead of flow rate, pressure drop
+is fixed. Flow rate is used to monitor state of simulation. On the plot
+comparison with Darcy-Weisbach is shown.
+
+`plot-inlet-velocity.py` plots comparison of simulated volume-averaged velocity
+with value calculated with Darcy-Weisbach equation.
+
+== cylinder-array-in-square-tube
+
+Transient simulation of the flow in square tube through an array of
+perpendicular cylinders.
+
+.Channel geometry
+image:https://raw.githubusercontent.com/mrklein/foam-cases/master/permeability/cylinder-array-in-square-tube/geometry.png[Initial geometry,350,350]
+
+Constant pressure difference at the inlet and outlet
+is set. Permeability of the channel, estimated from Darcy's law, using volume
+averaged velocity, is used to monitor state of the simulation.
+
+`gen-cylinders.py` script generates `cylinders` file with `searchableCylinder`
+descriptions, which then included into `snappyHexMeshDict`.
+
+`plot-permeability.py` plots channel permeability calculated with Darcy's law.
+
+`plot-permeability.gp` plots channel permeability with `gnuplot`.

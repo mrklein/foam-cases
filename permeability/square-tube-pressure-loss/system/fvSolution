@@ -1,0 +1,68 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object fvSolution;
+}
+
+solvers
+{
+  p
+  {
+    solver PCG;
+    preconditioner DIC;
+    tolerance 1e-8;
+    relTol 1e-1;
+  }
+
+  U
+  {
+    solver PBiCG;
+    preconditioner DILU;
+    tolerance 1e-8;
+    relTol 1e-1;
+  }
+
+  pFinal
+  {
+    $p;
+    relTol 0;
+  }
+
+  UFinal
+  {
+    $U;
+    relTol 0;
+  }
+}
+
+PIMPLE
+{
+  momentumPredictor   off;
+
+  nOuterCorrectors    50;
+  nCorrectors         2;
+  nNonOrthogonalCorrectors 0;
+
+  turbOnFinalIterOnly yes;
+
+  residualControl
+  {
+    "(p|U)"
+    {
+      tolerance 1e-4;
+      relTol 0;
+    }
+  }
+}
+
+relaxationFactors
+{
+  equations
+  {
+    ".*"   1;
+  }
+}
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:

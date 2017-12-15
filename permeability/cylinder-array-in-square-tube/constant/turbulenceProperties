@@ -1,0 +1,11 @@
+FoamFile
+{
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object turbulenceProperties;
+}
+
+simulationType laminar;
+
+// vi: set ft=foam et sw=2 ts=2 sts=2:
