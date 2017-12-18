@@ -6,3 +6,4 @@ cd ${0%/*} || exit 1
 runApplication blockMesh
 runApplication snappyHexMesh -overwrite
 runApplication createPatch -overwrite
+runApplication topoSet

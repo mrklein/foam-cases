@@ -42,13 +42,89 @@ functions
     writeInterval 1e-3;
     writeFields false;
 
-    regionType all;
+    regionType cellZone;
+    name porous-zone;
     operation volAverage;
 
     fields
     (
       U
     );
+  }
+
+  pressure-delta
+  {
+    type fieldValueDelta;
+    libs ("libfieldFunctionObjects.so");
+    operation subtract;
+
+    writeControl adjustableRunTime;
+    writeInterval 1e-3;
+    writeFields false;
+
+    region1
+    {
+      type surfaceFieldValue;
+      libs ("libfieldFunctionObjects.so");
+
+      log true;
+
+      writeControl adjustableRunTime;
+      writeInterval 1e-3;
+      writeFields false;
+
+      regionType sampledSurface;
+      name porous-zone-inlet;
+      sampledSurfaceDict
+      {
+        type plane;
+        planeType pointAndNormal;
+        pointAndNormalDict
+        {
+          point (0.5e-3 0 0);
+          normal (1 0 0);
+        }
+      }
+
+      operation areaAverage;
+
+      fields
+      (
+        p
+      );
+    }
+
+    region2
+    {
+      type surfaceFieldValue;
+      libs ("libfieldFunctionObjects.so");
+
+      log true;
+
+      writeControl adjustableRunTime;
+      writeInterval 1e-3;
+      writeFields false;
+
+      regionType sampledSurface;
+      name porous-zone-outlet;
+      sampledSurfaceDict
+      {
+        type plane;
+        planeType pointAndNormal;
+        pointAndNormalDict
+        {
+          point (1.5e-3 0 0);
+          normal (1 0 0);
+        }
+      }
+
+      operation areaAverage;
+
+      fields
+      (
+        p
+      );
+    }
   }
 }
 
