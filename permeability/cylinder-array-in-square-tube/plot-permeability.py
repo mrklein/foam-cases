@@ -23,10 +23,10 @@ plt.plot(data[:, 0], xi*data[:, 1]/dp[:, 1]*nu*Lx*1e12, '.-', label='Permeabilit
 plt.legend(loc='best')
 plt.xlim(xmin=0, xmax=0.2)
 plt.xlabel('Time, s')
-plt.ylim(ymin=0)
+# plt.ylim(ymin=0)
 plt.ylabel('Permeability, d')
 plt.grid(ls=':')
 
-# plt.savefig('permeability.pdf', bbox_inches='tight', bbox_padding=0.3)
+plt.savefig('permeability.pdf', bbox_inches='tight', bbox_padding=0.3)
 
-plt.show()
+# plt.show()
